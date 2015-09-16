@@ -136,7 +136,10 @@ class Url {
     	foreach($variablesKeys as $variable) {
     		if (is_array($this->data) and array_key_exists($variable, $this->data)) {
     			$values[] = $this->data[$variable];
-    		}
+	        // else if there is default value defined for that variable
+    		} elseif ( (is_array($this->defaults)) and (array_key_exists($variable, $this->defaults))) {
+	        	$values[] = $this->defaults[$variable];
+			} 
     	} 
     	if (is_array($values)) $this->add($key, $values);
        	return $this;

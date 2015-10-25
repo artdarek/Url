@@ -3,8 +3,8 @@
 namespace Artdarek;
 
 /**
- * Version: 0.0.5
- * Updated: 2015.08.12
+ * Version: 0.0.6
+ * Updated: 2015.10.13
  * Author: 	Dariusz Prząda (artdarek@gmail.com)
  */
 class Url {
@@ -43,7 +43,7 @@ class Url {
 	 * [$take description]
 	 * @var [type]
 	 */
-	private $take = ['a','c','s1','s2','s3','s4','s5'];
+	private $take = [];
 
 	/**
 	 * [__construct description]
@@ -63,9 +63,13 @@ class Url {
 		$this->defaults = []; // clean defaults array each time make() method is called
 
 		if (is_array($data)) {
-			$this->data = $data;
-			$this->query = $data;
+			$this->data = $data; // raw source query data
+			$this->query = $data; // destination data for building new query
 		}
+
+        // if take array is empty set all vars from url by default
+        $this->_takeAllIfNotSpecified();
+
 		return $this;
 	}
 
@@ -121,6 +125,7 @@ class Url {
     	} else {
     		$this->query[$key] = $value;
     	}
+    	$this->take[] = $key; 
     	return $this;
     }
 
@@ -136,10 +141,7 @@ class Url {
     	foreach($variablesKeys as $variable) {
     		if (is_array($this->data) and array_key_exists($variable, $this->data)) {
     			$values[] = $this->data[$variable];
-	        // else if there is default value defined for that variable
-    		} elseif ( (is_array($this->defaults)) and (array_key_exists($variable, $this->defaults))) {
-	        	$values[] = $this->defaults[$variable];
-			} 
+    		}
     	} 
     	if (is_array($values)) $this->add($key, $values);
        	return $this;
@@ -173,6 +175,18 @@ class Url {
 	    }
 
 	    return $query;
+    }
+
+    /**
+     * takeAll
+     * @return [type] [description]
+     */
+    private function _takeAllIfNotSpecified() 
+    {
+        // if take array is empty set all vars from url
+        if ((!is_array($this->take)) or (count($this->take) <= 0)) {
+        	$this->take = array_keys($this->data);
+        }
     }
 
     /**

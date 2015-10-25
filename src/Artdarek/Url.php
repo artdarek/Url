@@ -3,8 +3,8 @@
 namespace Artdarek;
 
 /**
- * Version: 0.0.6
- * Updated: 2015.10.13
+ * Version: 0.0.7
+ * Updated: 2015.10.25
  * Author: 	Dariusz Prząda (artdarek@gmail.com)
  */
 class Url {
@@ -57,6 +57,7 @@ class Url {
 	 * [make description]
 	 * @param  [type] $data [description]
 	 * @return [type]       [description]
+     * @return object self
 	 */
 	public function make($data = null) 
 	{	
@@ -77,6 +78,7 @@ class Url {
 	 * [base description]
 	 * @param  [type] $base [description]
 	 * @return [type]       [description]
+     * @return object self
 	 */
     public function base($base = null) 
     {
@@ -92,6 +94,7 @@ class Url {
      * [take description]
      * @param  [type] $params [description]
      * @return [type]         [description]
+     * @return object self
      */
     public function take($params = []) 
     {
@@ -103,6 +106,7 @@ class Url {
      * [defaults description]
      * @param  [type] $params [description]
      * @return [type]         [description]
+     * @return object self
      */
     public function defaults($params = []) 
     {
@@ -111,9 +115,11 @@ class Url {
     }
     
     /**
-     * [add description]
-     * @param [type] $key   [description]
-     * @param [type] $value [description]
+     * Add variable name and value
+     * 
+     * @param string $key
+     * @param string|array $value
+     * @return object self
      */
     public function add($key,$value) {
     	if ((is_array($value)) and (count($value)>=1)) {
@@ -131,9 +137,9 @@ class Url {
 
     /**
      * [combine description]
-     * @param  [type] $key           [description]
-     * @param  [type] $variablesKeys [description]
-     * @return [type]                [description]
+     * @param  string $key
+     * @param  array $variablesKeys
+     * @return object self
      */
     public function combine($key, $variablesKeys = []) 
     {
@@ -148,8 +154,9 @@ class Url {
     }
 
     /**
-     * [createQuery description]
-     * @return [type] [description]
+     * Create url query
+     * 
+     * @return string
      */
     public function createQuery() 
     {
@@ -178,8 +185,8 @@ class Url {
     }
 
     /**
-     * takeAll
-     * @return [type] [description]
+     * Get all variable keys and fill $this->take array with them
+     * @return void
      */
     private function _takeAllIfNotSpecified() 
     {
@@ -190,7 +197,7 @@ class Url {
     }
 
     /**
-     * [createBase description]
+     * Create url base
      * @return [type] [description]
      */
 	public function createBase($url) 
@@ -211,8 +218,8 @@ class Url {
 
 
 	/**
-	 * [get description]
-	 * @return [type] [description]
+	 * Get finall url
+	 * @return string
 	 */
     public function get() 
     {	
@@ -223,8 +230,8 @@ class Url {
     
     /**
      * [_getUrlQueryAndAssignAllParamsToTargetQueryArray description]
-     * @param  [type] $url [description]
-     * @return [type]      [description]
+     * @param  string $url
+     * @return void
      */
     private function _getUrlQueryAndAssignAllParamsToTargetQueryArray($url) 
     {
